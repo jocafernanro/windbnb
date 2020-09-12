@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters("stays", {
-      stays: "stays"
+      stays: "getStaysByFiler"
     })
   },
   methods: mapActions("stays", ["populateStays"]),

@@ -1,6 +1,6 @@
 <template>
-  <div class="fixed top-0 left-0 bottom-0 right-0 mt-16 bg-black bg-opacity-50">
-    <div class="bg-white">
+  <div class="fixed top-0 left-0 bottom-0 right-0 bg-black bg-opacity-50">
+    <div class="bg-white pt-16">
       <div class="container mx-auto p-2 relative">
         <i
           @click="$emit('on-close-modal')"
@@ -15,12 +15,19 @@
             id="search-bar-item-1"
           >
             <span class="text-2xs font-bold">LOCATION</span>
-            <span class="text-xs">Helsinki, Finland</span>
+            <input
+              id="location"
+              class="no-outline text-xs"
+              type="text"
+              placeholder="Where do you travel?"
+              :value="locationFormatted"
+            />
             <stays-locations-selector
               v-if="isLocationsSelectorOpen"
             ></stays-locations-selector>
             <i
               v-if="isLocationsSelectorOpen"
+              @click="setLocationFilter('')"
               class="material-icons absolute text-sm bg-gray-300 hover:bg-gray-400 rounded-full p-1 right-0 mr-4 cursor-pointer"
               >close</i
             >
@@ -44,7 +51,7 @@
           </button>
           <div class="w-2/12 p-2 boder-r border-gray-400 text-right">
             <button
-              @click="filterStays"
+              @click="setStaysFilter"
               class="bg-gradient-to-r from-red-600 to-pink-600 text-white text-sm rounded-md py-3 px-4"
             >
               <span class="flex flex-row justify-center items-center">
@@ -60,7 +67,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import StaysLocationsSelector from "@/components/stays/StaysLocationsSelector";
 import StaysGuestsSelector from "@/components/stays/StaysGuestsSelector";
 import vClickOutside from "v-click-outside";
@@ -68,27 +75,44 @@ import vClickOutside from "v-click-outside";
 export default {
   components: {
     StaysLocationsSelector,
-    StaysGuestsSelector
+    StaysGuestsSelector,
   },
   directives: {
-    clickOutside: vClickOutside.directive
+    clickOutside: vClickOutside.directive,
   },
   data() {
     return {
       modal: {
         locations: "locations",
-        guests: "guests"
+        guests: "guests",
       },
       isLocationsSelectorOpen: false,
-      isGuestsSelectorOpen: false
+      isGuestsSelectorOpen: false,
+      filter: {
+        location: "",
+        guests: {
+          adults: 0,
+          childrens: 0,
+          babies: 0,
+        },
+      },
     };
   },
+  computed: {
+    ...mapGetters("stays", {
+      location: "getLocation",
+    }),
+    locationFormatted() {
+      return this.location && `${this.location}, Finland`;
+    },
+  },
   methods: {
-    ...mapActions("stays", ["setStaysFilter"]),
+    ...mapActions("stays", ["setStaysFilter", "setLocationFilter"]),
     toggleModal(modal) {
       switch (modal) {
         case this.modal.locations:
           this.isLocationsSelectorOpen = !this.isLocationsSelectorOpen;
+          document.querySelector("#location").focus();
           break;
         case this.modal.guests:
           this.isGuestsSelectorOpen = !this.isGuestsSelectorOpen;
@@ -102,8 +126,8 @@ export default {
     },
     onClickOutsideLocationsSelector() {
       if (this.isLocationsSelectorOpen) this.isLocationsSelectorOpen = false;
-    }
-  }
+    },
+  },
 };
 </script>
 

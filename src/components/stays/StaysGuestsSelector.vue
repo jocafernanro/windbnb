@@ -9,11 +9,19 @@
         </div>
         <div>
           <span class="flex flex-row items-center">
-            <i class="material-icons p-1 border border-gray-200 rounded-full"
+            <i
+              @click="
+                setGuestsFilter({
+                  guest: GUESTS.ADULTS,
+                  operation: GUESTS.OPERATIONS.DECREASE,
+                })
+              "
+              class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >remove</i
             >
-            <span class="m-2">0</span>
-            <i class="material-icons p-1 border border-gray-200 rounded-full"
+            <span class="m-2">{{ adults }}</span>
+            <i
+              class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >add</i
             ></span
           >
@@ -30,11 +38,13 @@
         </div>
         <div>
           <span class="flex flex-row items-center">
-            <i class="material-icons p-1 border border-gray-200 rounded-full"
+            <i
+              class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >remove</i
             >
-            <span class="m-2">0</span>
-            <i class="material-icons p-1 border border-gray-200 rounded-full"
+            <span class="m-2">{{ children }}</span>
+            <i
+              class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >add</i
             ></span
           >
@@ -49,11 +59,13 @@
         </div>
         <div>
           <span class="flex flex-row items-center">
-            <i class="material-icons p-1 border border-gray-200 rounded-full"
+            <i
+              class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >remove</i
             >
-            <span class="m-2">0</span>
-            <i class="material-icons p-1 border border-gray-200 rounded-full"
+            <span class="m-2">{{ babies }}</span>
+            <i
+              class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >add</i
             ></span
           >
@@ -64,11 +76,29 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import AppBaseSelector from "@/components/ui/AppBaseSelector";
+import { GUESTS } from "@/data/CONSTANTS";
+
 export default {
   components: {
-    AppBaseSelector
-  }
+    AppBaseSelector,
+  },
+  data() {
+    return {
+      GUESTS: GUESTS,
+    };
+  },
+  computed: {
+    ...mapGetters("stays", {
+      adults: "getAdults",
+      children: "getChildren",
+      babies: "getBabies",
+    }),
+  },
+  methods: {
+    ...mapActions("stays", ["setGuestsFilter"]),
+  },
 };
 </script>
 
