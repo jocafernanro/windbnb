@@ -20,17 +20,21 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
 import StaysCard from "@/components/stays/StaysCard";
-import stays from "@/data/stays.json";
 
 export default {
   components: {
     StaysCard
   },
-  data() {
-    return {
-      stays
-    };
+  computed: {
+    ...mapGetters("stays", {
+      stays: "stays"
+    })
+  },
+  methods: mapActions("stays", ["populateStays"]),
+  mounted() {
+    this.populateStays();
   }
 };
 </script>

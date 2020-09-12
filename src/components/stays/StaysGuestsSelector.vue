@@ -25,8 +25,8 @@
         class="flex flex-row justify-between items-center py-3 border-t border-b border-gray-200"
       >
         <div class="flex flex-col text-left">
-          <span class="text-md">Adults</span>
-          <span class="text-xs text-gray-500">Ages 13 or above</span>
+          <span class="text-md">Children</span>
+          <span class="text-xs text-gray-500">Ages to 2 to 12</span>
         </div>
         <div>
           <span class="flex flex-row items-center">
@@ -44,8 +44,8 @@
       <!-- Babies -->
       <li class="flex flex-row justify-between items-center pt-3">
         <div class="flex flex-col text-left">
-          <span class="text-md">Adults</span>
-          <span class="text-xs text-gray-500">Ages 13 or above</span>
+          <span class="text-md">Babies</span>
+          <span class="text-xs text-gray-500">Ages under 2</span>
         </div>
         <div>
           <span class="flex flex-row items-center">

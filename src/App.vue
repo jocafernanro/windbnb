@@ -1,9 +1,13 @@
 <template>
   <div id="app" class="container mx-auto p-4">
-    <app-header></app-header>
+    <app-header @on-searchbar-click="isModalOpen = !isModalOpen"></app-header>
     <app-Stays></app-Stays>
     <app-footer></app-footer>
-    <app-modal></app-modal>
+    <app-modal
+      @on-close-modal="isModalOpen = false"
+      v-click-outside="onClickOutsideModal"
+      v-if="isModalOpen"
+    ></app-modal>
   </div>
 </template>
 
@@ -16,6 +20,9 @@ import AppFooter from "@/components/layout/AppFooter";
 // UI
 import AppModal from "@/components/ui/AppModal";
 
+// Directives
+import vClickOutside from "v-click-outside";
+
 export default {
   name: "App",
   components: {
@@ -23,6 +30,19 @@ export default {
     AppStays,
     AppFooter,
     AppModal
+  },
+  data() {
+    return {
+      isModalOpen: false
+    };
+  },
+  directives: {
+    clickOutside: vClickOutside.directive
+  },
+  methods: {
+    onClickOutsideModal() {
+      if (this.isModalOpen) this.isModalOpen = false;
+    }
   }
 };
 </script>
