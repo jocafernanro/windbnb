@@ -1,13 +1,29 @@
 <template>
-  <div id="app">
-    <div class="font-bold text-blue-500">Testing Tailwindcss</div>
+  <div id="app" class="container mx-auto p-4">
+    <app-header></app-header>
+    <app-Stays></app-Stays>
+    <app-footer></app-footer>
+    <app-modal></app-modal>
   </div>
 </template>
 
 <script>
+// Layout
+import AppHeader from "@/components/layout/AppHeader";
+import AppStays from "@/components/layout/AppStays";
+import AppFooter from "@/components/layout/AppFooter";
+
+// UI
+import AppModal from "@/components/ui/AppModal";
+
 export default {
   name: "App",
-  components: {}
+  components: {
+    AppHeader,
+    AppStays,
+    AppFooter,
+    AppModal
+  }
 };
 </script>
 
