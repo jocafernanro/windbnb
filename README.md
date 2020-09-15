@@ -5,7 +5,7 @@ The challenge and the requirements here: [https://devchallenges.io/challenges/3J
 
 ## Project
 
-This is a airbnb clone made with vue, Vuex, and tailwindcss. Check it on live here: https://windbnb-airbnb-clone.josematico.com/
+This is an airbnb clone made with vue, Vuex, and tailwindcss. Check it on live here: https://windbnb-airbnb-clone.josematico.com/
 
 ## Project setup
 
