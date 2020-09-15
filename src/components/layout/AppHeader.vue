@@ -6,12 +6,12 @@
       class="flex flex-row rounded-xl shadow hover:shadow-lg"
     >
       <button class="rounded-l-xl pt-3 pb-2 px-4">
-        <span>Helsinki, Finland</span>
+        <span>{{ location }}</span>
       </button>
       <button
         class="border-l border-r border-gray-200 pt-3 pb-2 px-4 text-gray-400"
       >
-        <span>Add guests</span>
+        <span>{{ guestsFormatted }}</span>
       </button>
       <button class="rounded-r-xl pt-3 pb-2 px-3 flex flex-row items-center">
         <i class="material-icons text-lg text-red-400">search</i>
@@ -21,7 +21,16 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+
+export default {
+  computed: {
+    ...mapGetters("stays", {
+      location: "getLocationFormatted",
+      guestsFormatted: "getGuestsFormatted"
+    })
+  }
+};
 </script>
 
 <style></style>

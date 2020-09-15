@@ -13,7 +13,7 @@
               @click="
                 setGuestsFilter({
                   guest: GUESTS.ADULTS,
-                  operation: GUESTS.OPERATIONS.DECREASE,
+                  operation: GUESTS.OPERATIONS.DECREASE
                 })
               "
               class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
@@ -21,6 +21,12 @@
             >
             <span class="m-2">{{ adults }}</span>
             <i
+              @click="
+                setGuestsFilter({
+                  guest: GUESTS.ADULTS,
+                  operation: GUESTS.OPERATIONS.INCREASE
+                })
+              "
               class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >add</i
             ></span
@@ -28,7 +34,7 @@
         </div>
       </li>
 
-      <!-- Childrens -->
+      <!-- Children -->
       <li
         class="flex flex-row justify-between items-center py-3 border-t border-b border-gray-200"
       >
@@ -39,11 +45,23 @@
         <div>
           <span class="flex flex-row items-center">
             <i
+              @click="
+                setGuestsFilter({
+                  guest: GUESTS.CHILDREN,
+                  operation: GUESTS.OPERATIONS.DECREASE
+                })
+              "
               class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >remove</i
             >
             <span class="m-2">{{ children }}</span>
             <i
+              @click="
+                setGuestsFilter({
+                  guest: GUESTS.CHILDREN,
+                  operation: GUESTS.OPERATIONS.INCREASE
+                })
+              "
               class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >add</i
             ></span
@@ -60,11 +78,23 @@
         <div>
           <span class="flex flex-row items-center">
             <i
+              @click="
+                setGuestsFilter({
+                  guest: GUESTS.BABIES,
+                  operation: GUESTS.OPERATIONS.DECREASE
+                })
+              "
               class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >remove</i
             >
             <span class="m-2">{{ babies }}</span>
             <i
+              @click="
+                setGuestsFilter({
+                  guest: GUESTS.BABIES,
+                  operation: GUESTS.OPERATIONS.INCREASE
+                })
+              "
               class="material-icons p-1 border border-gray-200 hover:border-black rounded-full"
               >add</i
             ></span
@@ -82,23 +112,23 @@ import { GUESTS } from "@/data/CONSTANTS";
 
 export default {
   components: {
-    AppBaseSelector,
+    AppBaseSelector
   },
   data() {
     return {
-      GUESTS: GUESTS,
+      GUESTS: GUESTS
     };
   },
   computed: {
     ...mapGetters("stays", {
       adults: "getAdults",
       children: "getChildren",
-      babies: "getBabies",
-    }),
+      babies: "getBabies"
+    })
   },
   methods: {
-    ...mapActions("stays", ["setGuestsFilter"]),
-  },
+    ...mapActions("stays", ["setGuestsFilter"])
+  }
 };
 </script>
 

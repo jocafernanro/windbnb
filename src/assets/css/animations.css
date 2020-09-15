@@ -1,0 +1,22 @@
+/**
+ * ----------------------------------------
+ * animation slide-top
+ * ----------------------------------------
+ */
+
+.slide-top-enter-active {
+    animation: slide-top .5s;
+}
+.slide-top-leave-active {
+    animation: slide-top .5s reverse;
+}
+@keyframes slide-top {
+    0% {
+        transform: translateY(-1000px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

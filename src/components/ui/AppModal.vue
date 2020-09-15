@@ -10,14 +10,14 @@
         <div class="flex flex-row border border-gray-400 rounded-xl">
           <button
             v-click-outside="onClickOutsideLocationsSelector"
-            @click.prevent="toggleModal(modal.locations)"
+            @click.self="toggleModal(modal.locations)"
             class="search-bar-item w-5/12 no-outline"
             id="search-bar-item-1"
           >
             <span class="text-2xs font-bold">LOCATION</span>
             <input
               id="location"
-              class="no-outline text-xs"
+              class="no-outline text-xs bg-opacity-0"
               type="text"
               placeholder="Where do you travel?"
               :value="locationFormatted"
@@ -34,16 +34,18 @@
           </button>
           <button
             v-click-outside="onClickOutsideGuestsSelector"
-            @click.prevent="toggleModal(modal.guests)"
-            class="search-bar-item w-5/12 no-outline"
+            @click.self="toggleModal(modal.guests)"
+            class="search-bar-item
+            w-5/12 no-outline"
             id="search-bar-item-2"
           >
             <span class="text-2xs font-bold">GUESTS</span>
-            <span class="text-xs">Add guests</span>
+            <span class="text-xs">{{ guestsFormatted }}</span>
             <stays-guests-selector
               v-if="isGuestsSelectorOpen"
             ></stays-guests-selector>
             <i
+              @click="resetGuestsFilter"
               v-if="isGuestsSelectorOpen"
               class="material-icons absolute text-sm bg-gray-300 hover:bg-gray-400 rounded-full p-1 right-0 mr-4 cursor-pointer"
               >close</i
@@ -70,44 +72,37 @@
 import { mapGetters, mapActions } from "vuex";
 import StaysLocationsSelector from "@/components/stays/StaysLocationsSelector";
 import StaysGuestsSelector from "@/components/stays/StaysGuestsSelector";
-import vClickOutside from "v-click-outside";
 
 export default {
   components: {
     StaysLocationsSelector,
-    StaysGuestsSelector,
-  },
-  directives: {
-    clickOutside: vClickOutside.directive,
+    StaysGuestsSelector
   },
   data() {
     return {
       modal: {
         locations: "locations",
-        guests: "guests",
+        guests: "guests"
       },
       isLocationsSelectorOpen: false,
-      isGuestsSelectorOpen: false,
-      filter: {
-        location: "",
-        guests: {
-          adults: 0,
-          childrens: 0,
-          babies: 0,
-        },
-      },
+      isGuestsSelectorOpen: false
     };
   },
   computed: {
     ...mapGetters("stays", {
       location: "getLocation",
+      guestsFormatted: "getGuestsFormatted"
     }),
     locationFormatted() {
       return this.location && `${this.location}, Finland`;
-    },
+    }
   },
   methods: {
-    ...mapActions("stays", ["setStaysFilter", "setLocationFilter"]),
+    ...mapActions("stays", [
+      "setStaysFilter",
+      "setLocationFilter",
+      "resetGuestsFilter"
+    ]),
     toggleModal(modal) {
       switch (modal) {
         case this.modal.locations:
@@ -126,8 +121,8 @@ export default {
     },
     onClickOutsideLocationsSelector() {
       if (this.isLocationsSelectorOpen) this.isLocationsSelectorOpen = false;
-    },
-  },
+    }
+  }
 };
 </script>
 

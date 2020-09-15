@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import StaysCard from "@/components/stays/StaysCard";
 
 export default {
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     ...mapGetters("stays", {
-      stays: "getStaysByFiler"
+      staysFiltered: "getStaysByFiler"
     })
   },
   methods: mapActions("stays", ["populateStays"]),

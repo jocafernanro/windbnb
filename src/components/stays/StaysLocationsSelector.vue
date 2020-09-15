@@ -24,16 +24,16 @@ import { mapGetters, mapActions } from "vuex";
 import AppBaseSelector from "@/components/ui/AppBaseSelector";
 export default {
   components: {
-    AppBaseSelector,
+    AppBaseSelector
   },
   computed: {
     ...mapGetters("stays", {
-      locations: "getLocations",
-    }),
+      locations: "getLocations"
+    })
   },
   methods: {
-    ...mapActions("stays", ["setLocationFilter"]),
-  },
+    ...mapActions("stays", ["setLocationFilter"])
+  }
 };
 </script>
 
