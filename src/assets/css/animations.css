@@ -4,10 +4,10 @@
  * ----------------------------------------
  */
 
-.slide-top-enter-active {
+.slide-top-enter-active, .slide-top-enter {
     animation: slide-top .5s;
 }
-.slide-top-leave-active {
+.slide-top-leave-active, slide-top-leave {
     animation: slide-top .5s reverse;
 }
 @keyframes slide-top {

@@ -121,9 +121,9 @@ export default {
   },
   computed: {
     ...mapGetters("stays", {
-      adults: "getAdults",
-      children: "getChildren",
-      babies: "getBabies"
+      adults: "getAdultsFilter",
+      children: "getChildrenFilter",
+      babies: "getBabiesFilter"
     })
   },
   methods: {

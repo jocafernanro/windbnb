@@ -4,6 +4,7 @@ import store from "./store";
 
 import "./directives/clickOutside";
 import "./assets/css/tailwind.css";
+import "./assets/css/animations.css";
 
 Vue.config.productionTip = false;
 

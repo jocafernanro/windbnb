@@ -1,14 +1,12 @@
 <template>
   <div id="app" class="container mx-auto p-4">
     <app-header @on-searchbar-click="isModalOpen = !isModalOpen"></app-header>
-    <app-Stays></app-Stays>
+    <app-stays></app-stays>
     <app-footer></app-footer>
-    <transition name="slide-top">
-      <app-modal
-        @on-close-modal="isModalOpen = false"
-        v-if="isModalOpen"
-      ></app-modal>
-    </transition>
+    <app-modal
+      @on-close-modal="isModalOpen = false"
+      v-if="isModalOpen"
+    ></app-modal>
   </div>
 </template>
 
@@ -33,11 +31,6 @@ export default {
     return {
       isModalOpen: false
     };
-  },
-  methods: {
-    onClickOutsideModal() {
-      if (this.isModalOpen) this.isModalOpen = false;
-    }
   }
 };
 </script>
@@ -60,8 +53,6 @@ body {
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
   scroll-behavior: smooth;
 }

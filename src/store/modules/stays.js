@@ -17,6 +17,14 @@ const state = () => ({
       children: 0,
       babies: 0
     }
+  },
+  tmpFilter: {
+    location: "",
+    guests: {
+      adults: 0,
+      children: 0,
+      babies: 0
+    }
   }
 });
 
@@ -25,8 +33,6 @@ const getters = {
     const guestsFiltered = () => sumGuests(state.filter.guests);
     const locationFiltered = () => state.filter.location.length > 0;
 
-    console.log({ guestsFiltered, locationFiltered, stays });
-
     return stays
       .filter(stay => stay.maxGuests >= guestsFiltered())
       .filter(stay =>
@@ -34,22 +40,34 @@ const getters = {
       );
   },
   getLocations(state) {
-    return [...new Set(state.stays.map(location => location.city))];
+    const locations = [...new Set(state.stays.map(stay => stay.city))];
+    const locationFiltered = locations.filter(city => {
+      return city
+        .toLowerCase()
+        .includes(state.tmpFilter.location.toLowerCase());
+    });
+    return state.tmpFilter.location.length === 0 ? locations : locationFiltered;
   },
   getLocation(state) {
     return state.filter.location;
   },
-  getAdults(state) {
-    return state.filter.guests.adults;
+  getLocationFilter(state) {
+    return state.tmpFilter.location;
   },
-  getChildren(state) {
-    return state.filter.guests.children;
+  getAdultsFilter(state) {
+    return state.tmpFilter.guests.adults;
   },
-  getBabies(state) {
-    return state.filter.guests.babies;
+  getChildrenFilter(state) {
+    return state.tmpFilter.guests.children;
+  },
+  getBabiesFilter(state) {
+    return state.tmpFilter.guests.babies;
   },
   getTotalGuests(state) {
     return sumGuests(state.filter.guests);
+  },
+  getTotalGuestsFilter(state) {
+    return sumGuests(state.tmpFilter.guests);
   },
   getGuestsFormatted(state, getters) {
     const guests = getters.getTotalGuests;
@@ -69,14 +87,11 @@ const actions = {
   populateStays({ commit }) {
     commit("populateStays");
   },
-  setFilter({ commit }, filter) {
-    commit("setFilter", filter);
-  },
   setLocationFilter({ commit }, location) {
     commit("setLocationFilter", location);
   },
   setGuestsFilter({ commit, state }, { guest, operation }) {
-    const guestValue = state.filter.guests[guest];
+    const guestValue = state.tmpFilter.guests[guest];
     const result =
       operation === GUESTS.OPERATIONS.DECREASE
         ? decreaseValue(guestValue)
@@ -85,6 +100,12 @@ const actions = {
   },
   resetGuestsFilter({ commit }) {
     commit("resetGuestsFilter");
+  },
+  resetLocationFilter({ commit }) {
+    commit("resetLocationFilter");
+  },
+  async setStaysFilter({ commit }) {
+    await commit("setStaysFilter");
   }
 };
 
@@ -93,18 +114,21 @@ const mutations = {
     state.stays = stays;
   },
   setLocationFilter(state, location) {
-    state.filter.location = location;
-  },
-  setFilter(state, filter) {
-    state.filter = filter;
+    state.tmpFilter.location = location;
   },
   setGuestsFilter(state, guestData) {
-    state.filter.guests[guestData.guest] = guestData.result;
+    state.tmpFilter.guests[guestData.guest] = guestData.result;
   },
   resetGuestsFilter(state) {
-    Object.keys(state.filter.guests).forEach(guest => {
-      state.filter.guests[guest] = 0;
+    Object.keys(state.tmpFilter.guests).forEach(guest => {
+      state.tmpFilter.guests[guest] = 0;
     });
+  },
+  resetLocationFilter(state) {
+    state.tmpFilter.location = "";
+  },
+  setStaysFilter(state) {
+    state.filter = JSON.parse(JSON.stringify(state.tmpFilter));
   }
 };
 
